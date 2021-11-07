@@ -4,12 +4,19 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import javax.swing.text.TabExpander;
+
 @SpringBootApplication
 public class Main {
 
     @Bean
-    public Theater theater(){
+    public Theater theater() {
         return new Theater();
+    }
+
+    @Bean
+    public TheaterService theaterService(Theater theater) {
+        return new TheaterService(theater);
     }
 
     public static void main(String[] args) {
