@@ -1,4 +1,4 @@
-package cinema.repository;
+package cinema.entity;
 
 public class Seat {
     public static final int MAX_EXPENSIVE_ROW = 4;
@@ -8,7 +8,7 @@ public class Seat {
     private final int row;
     private final int column;
     private final int price;
-    boolean available = true;
+    private boolean available = true;
 
     public Seat(int row, int column) {
         this.row = row;

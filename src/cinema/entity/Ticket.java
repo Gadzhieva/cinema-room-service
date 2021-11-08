@@ -1,13 +1,13 @@
-package cinema.repository;
+package cinema.entity;
 
 import java.util.UUID;
 
 public class Ticket {
-    private Seat seat;
-    private UUID token;
+    private final Seat ticket;
+    private final UUID token;
 
-    public Seat getSeat() {
-        return seat;
+    public Seat getTicket() {
+        return ticket;
     }
 
     public UUID getToken() {
@@ -15,7 +15,7 @@ public class Ticket {
     }
 
     public Ticket(Seat seat, UUID token) {
-        this.seat = seat;
+        this.ticket = seat;
         this.token = token;
     }
 }

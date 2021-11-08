@@ -1,6 +1,9 @@
-package cinema;
+package cinema.config;
 
 import cinema.dto.ExceptionDto;
+import cinema.exception.NotFoundException;
+import cinema.exception.SeatIsNotAvailableException;
+import cinema.exception.WrongTokenException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -10,8 +13,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(value = {SeatIsNotAvailable.class})
-    protected ResponseEntity<ExceptionDto> handleSeatIsNotAvailable(SeatIsNotAvailable ex) {
+    @ExceptionHandler(value = {SeatIsNotAvailableException.class})
+    protected ResponseEntity<ExceptionDto> handleSeatIsNotAvailable(SeatIsNotAvailableException ex) {
         return new ResponseEntity<>(new ExceptionDto(ex.getMessage()), HttpStatus.BAD_REQUEST);
     }
 

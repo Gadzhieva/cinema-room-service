@@ -1,11 +1,11 @@
 package cinema.dto;
 
-import cinema.repository.Seat;
+import cinema.entity.Seat;
 
 public class SeatDto {
     private int row;
     private int column;
-    private Integer price;
+    private int price;
 
     public int getRow() {
         return row;

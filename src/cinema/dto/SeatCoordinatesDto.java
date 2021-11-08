@@ -1,6 +1,6 @@
 package cinema.dto;
 
-import cinema.repository.Seat;
+import cinema.entity.Seat;
 
 public class SeatCoordinatesDto {
     private int row;

@@ -1,18 +1,20 @@
-package cinema;
+package cinema.service;
 
+import cinema.dto.SeatDto;
 import cinema.dto.TheaterDto;
 import cinema.dto.TicketDto;
-import cinema.repository.Seat;
+import cinema.entity.Seat;
+import cinema.entity.Ticket;
+import cinema.exception.NotFoundException;
+import cinema.exception.SeatIsNotAvailableException;
+import cinema.exception.WrongTokenException;
 import cinema.repository.Theater;
-import cinema.repository.Ticket;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.UUID;
 
 public class TheaterService {
 
-    @Autowired
-    private Theater theater;
+    private final Theater theater;
 
     public TheaterService(Theater theater) {
         this.theater = theater;
@@ -33,22 +35,22 @@ public class TheaterService {
 
     public TicketDto purchaseTicket(int row, int column) {
         if (column > theater.getTotalColumns() || row > theater.getTotalRows() || column < 1 || row < 1) {
-            throw new SeatIsNotAvailable("The number of a row or a column is out of bounds!");
+            throw new SeatIsNotAvailableException("The number of a row or a column is out of bounds!");
         }
 
         Seat seat = getSeatByRowAndColumn(row, column);
         if (!seat.isAvailable()) {
-            throw new SeatIsNotAvailable("The ticket has been already purchased!");
+            throw new SeatIsNotAvailableException("The ticket has been already purchased!");
         }
 
         seat.setAvailable(false);
         Ticket ticket = new Ticket(seat, UUID.randomUUID());
-        theater.addTickets(ticket);
+        theater.addTicket(ticket);
         return new TicketDto(ticket);
     }
 
     private Ticket getTicketByToken(UUID token) {
-        for (Ticket ticket: theater.getTickets()) {
+        for (Ticket ticket : theater.getTickets()) {
             if (token.equals(ticket.getToken())) {
                 return ticket;
             }
@@ -56,11 +58,11 @@ public class TheaterService {
         throw new WrongTokenException("Wrong token!");
     }
 
-    public TicketDto returnTicket(UUID token) {
+    public SeatDto returnTicket(UUID token) {
         Ticket ticket = getTicketByToken(token);
-        Seat seat = ticket.getSeat();
+        Seat seat = ticket.getTicket();
         seat.setAvailable(true);
-        theater.removeTickets(ticket);
-        return new TicketDto(ticket);
+        theater.removeTicket(ticket);
+        return new SeatDto(seat);
     }
 }
