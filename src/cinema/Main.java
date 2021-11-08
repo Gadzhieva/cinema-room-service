@@ -8,8 +8,13 @@ import org.springframework.context.annotation.Bean;
 public class Main {
 
     @Bean
-    public Theater theater(){
+    public Theater theater() {
         return new Theater();
+    }
+
+    @Bean
+    public TheaterService theaterService(Theater theater) {
+        return new TheaterService(theater);
     }
 
     public static void main(String[] args) {
