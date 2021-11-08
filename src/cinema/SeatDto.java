@@ -5,9 +5,6 @@ public class SeatDto {
     private int column;
     private Integer price;
 
-    public SeatDto() {
-    }
-
     public int getRow() {
         return row;
     }
@@ -18,6 +15,9 @@ public class SeatDto {
 
     public int getPrice() {
         return price;
+    }
+
+    public SeatDto() {
     }
 
     public SeatDto(Seat seat) {

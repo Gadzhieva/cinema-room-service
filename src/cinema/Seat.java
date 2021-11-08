@@ -1,18 +1,23 @@
 package cinema;
 
 public class Seat {
-    int row;
-    int column;
-    int price;
+    public static final int MAX_EXPENSIVE_ROW = 4;
+    public static final int EXPENSIVE_TICKET_PRICE = 10;
+    public static final int CHEAP_TICKET_PRICE = 8;
+
+    private final int row;
+    private final int column;
+    private final int price;
+
     boolean available = true;
 
     public Seat(int row, int column) {
         this.row = row;
         this.column = column;
-        if (row <= 4) {
-            price = 10;
+        if (row <= MAX_EXPENSIVE_ROW) {
+            this.price = EXPENSIVE_TICKET_PRICE;
         } else {
-            price = 8;
+            this.price = CHEAP_TICKET_PRICE;
         }
     }
 
