@@ -1,6 +1,13 @@
 package cinema;
 
+import cinema.dto.TheaterDto;
+import cinema.dto.TicketDto;
+import cinema.repository.Seat;
+import cinema.repository.Theater;
+import cinema.repository.Ticket;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.UUID;
 
 public class TheaterService {
 
@@ -21,10 +28,10 @@ public class TheaterService {
                 return seat;
             }
         }
-        throw new SeatNotFoundException(String.format("Seat with row %d and column %d is not found", row, column));
+        throw new NotFoundException(String.format("Seat with row %d and column %d is not found", row, column));
     }
 
-    public SeatDto purchaseTicket(int row, int column) {
+    public TicketDto purchaseTicket(int row, int column) {
         if (column > theater.getTotalColumns() || row > theater.getTotalRows() || column < 1 || row < 1) {
             throw new SeatIsNotAvailable("The number of a row or a column is out of bounds!");
         }
@@ -35,6 +42,25 @@ public class TheaterService {
         }
 
         seat.setAvailable(false);
-        return new SeatDto(seat);
+        Ticket ticket = new Ticket(seat, UUID.randomUUID());
+        theater.addTickets(ticket);
+        return new TicketDto(ticket);
+    }
+
+    private Ticket getTicketByToken(UUID token) {
+        for (Ticket ticket: theater.getTickets()) {
+            if (token.equals(ticket.getToken())) {
+                return ticket;
+            }
+        }
+        throw new WrongTokenException("Wrong token!");
+    }
+
+    public TicketDto returnTicket(UUID token) {
+        Ticket ticket = getTicketByToken(token);
+        Seat seat = ticket.getSeat();
+        seat.setAvailable(true);
+        theater.removeTickets(ticket);
+        return new TicketDto(ticket);
     }
 }

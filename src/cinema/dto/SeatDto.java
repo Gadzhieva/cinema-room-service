@@ -1,4 +1,6 @@
-package cinema;
+package cinema.dto;
+
+import cinema.repository.Seat;
 
 public class SeatDto {
     private int row;

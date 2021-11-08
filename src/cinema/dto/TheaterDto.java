@@ -1,5 +1,7 @@
-package cinema;
+package cinema.dto;
 
+import cinema.repository.Seat;
+import cinema.repository.Theater;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
