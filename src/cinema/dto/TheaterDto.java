@@ -1,5 +1,7 @@
-package cinema;
+package cinema.dto;
 
+import cinema.entity.Seat;
+import cinema.repository.Theater;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
@@ -8,19 +10,19 @@ import java.util.List;
 public class TheaterDto {
 
     @JsonProperty("total_rows")
-    private int totalRows;
+    private final int totalRows;
 
     @JsonProperty("total_columns")
-    private int totalColumns;
+    private final int totalColumns;
 
     @JsonProperty("available_seats")
-    private List<SeatDto> availableSeats;
+    private final List<SeatDto> availableSeats;
 
     public TheaterDto(Theater theater) {
         this.totalColumns = theater.getTotalColumns();
         this.totalRows = theater.getTotalRows();
         this.availableSeats = new ArrayList<>();
-        for (Seat seat: theater.getAllSeats()) {
+        for (Seat seat : theater.getAllSeats()) {
             if (seat.isAvailable()) {
                 this.availableSeats.add(new SeatDto(seat));
             }

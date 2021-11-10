@@ -1,9 +1,10 @@
-package cinema;
+package cinema.dto;
 
-public class SeatDto {
+import cinema.entity.Seat;
+
+public class SeatCoordinatesDto {
     private int row;
     private int column;
-    private Integer price;
 
     public int getRow() {
         return row;
@@ -13,16 +14,11 @@ public class SeatDto {
         return column;
     }
 
-    public int getPrice() {
-        return price;
+    public SeatCoordinatesDto() {
     }
 
-    public SeatDto() {
-    }
-
-    public SeatDto(Seat seat) {
+    public SeatCoordinatesDto(Seat seat) {
         this.row = seat.getRow();
         this.column = seat.getColumn();
-        this.price = seat.getPrice();
     }
 }

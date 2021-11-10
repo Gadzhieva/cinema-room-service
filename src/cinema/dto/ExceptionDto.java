@@ -1,4 +1,4 @@
-package cinema;
+package cinema.dto;
 
 public class ExceptionDto {
 
