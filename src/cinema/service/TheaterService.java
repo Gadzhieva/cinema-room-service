@@ -1,12 +1,14 @@
 package cinema.service;
 
 import cinema.dto.SeatDto;
+import cinema.dto.StatisticsDto;
 import cinema.dto.TheaterDto;
 import cinema.dto.TicketDto;
 import cinema.entity.Seat;
 import cinema.entity.Ticket;
 import cinema.exception.NotFoundException;
 import cinema.exception.SeatIsNotAvailableException;
+import cinema.exception.WrongPasswordException;
 import cinema.exception.WrongTokenException;
 import cinema.repository.Theater;
 
@@ -64,5 +66,12 @@ public class TheaterService {
         seat.setAvailable(true);
         theater.removeTicket(ticket);
         return new SeatDto(seat);
+    }
+
+    public StatisticsDto returnStatistics(String password) {
+        if (!"super_secret".equals(password)) {
+            throw new WrongPasswordException("The password is wrong!");
+        }
+        return new StatisticsDto(theater);
     }
 }
