@@ -68,10 +68,22 @@ public class TheaterService {
         return new SeatDto(seat);
     }
 
+    public StatisticsDto generateStatistics() {
+        int purchasedTicketsNumber = theater.getTickets().size();
+        int availableSeatsNumber = theater.getTotalColumns() * theater.getTotalRows() - purchasedTicketsNumber;
+
+        int currentIncome = 0;
+        for (Ticket ticket : theater.getTickets()) {
+            currentIncome += ticket.getTicket().getPrice();
+        }
+
+        return new StatisticsDto(currentIncome, availableSeatsNumber, purchasedTicketsNumber);
+    }
+
     public StatisticsDto returnStatistics(String password) {
         if (!"super_secret".equals(password)) {
             throw new WrongPasswordException("The password is wrong!");
         }
-        return new StatisticsDto(theater);
+        return generateStatistics();
     }
 }
