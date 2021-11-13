@@ -2,10 +2,7 @@ package cinema.controller;
 
 import cinema.dto.*;
 import cinema.service.TheaterService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -31,5 +28,10 @@ public class TheaterController {
     @PostMapping("/return")
     public Map<String, SeatDto> returnTicket(@RequestBody TokenDto tokenDto) {
         return Map.of("returned_ticket", theaterService.returnTicket(tokenDto.getToken()));
+    }
+
+    @PostMapping("/stats")
+    public StatisticsDto returnStatistics(@RequestParam(required = false) String password) {
+        return theaterService.returnStatistics(password);
     }
 }
